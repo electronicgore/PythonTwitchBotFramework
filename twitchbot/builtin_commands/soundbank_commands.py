@@ -156,13 +156,13 @@ async def cmd_get_sound(msg: Message, *args):
     await msg.reply(f'{msg.author} played "{snd.sndid}" for {price} {currency}')
     
     # play the sound with PyDub; supports all formats supported by ffmpeg.
-	# Tested with mp3, wav, ogg.
+    # Tested with mp3, wav, ogg.
     if snd.gain:
         gain = snd.gain
     else:
         gain = cfg.soundbank_gain
-	sound = pd_audio.from_file(snd.filepath) + gain
-	pd_play(sound)
+    sound = pd_audio.from_file(snd.filepath) + gain
+    pd_play(sound)
 
 
 @Command('delsound', permission='sound', syntax='<sndid>', help='deletes the sound from the soundboard')
