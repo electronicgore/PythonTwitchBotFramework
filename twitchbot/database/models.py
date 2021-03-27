@@ -6,7 +6,7 @@ from .session import Base
 from ..config import cfg
 from ..enums import CommandContext
 
-__all__ = ('Quote', 'CustomCommand', 'Balance', 'CurrencyName', 'MessageTimer')
+__all__ = ('Quote', 'CustomCommand', 'Balance', 'CurrencyName', 'MessageTimer', 'Sound')
 
 
 class Quote(Base):
@@ -88,3 +88,24 @@ class MessageTimer(Base):
     @classmethod
     def create(cls, channel: str, name: str, message: str, interval: float, active=False):
         return MessageTimer(name=name, channel=channel, message=message, interval=interval, active=active)
+
+
+class Sound(Base):
+    __tablename__ = 'sounds'
+
+    id = Column(Integer, primary_key=True, nullable=False)
+    channel = Column(String(255), nullable=False)
+    sndid = Column(String(255), nullable=False)
+    filepath = Column(String(255), nullable=False)
+    price = Column(Integer)
+    pricemult = Column(Float)
+    gain = Column(Float)
+
+    @classmethod
+    def create(cls, channel: str, sndid: str, filepath: str, **kwargs):
+        optargs = {}
+        for key in ['price','pricemult','gain']:
+            if key in kwargs:
+                optargs[key] = kwargs[key]
+        return Sound(channel=channel.lower(), sndid=sndid.lower(),
+            filepath=filepath, **optargs)
