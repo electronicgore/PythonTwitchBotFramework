@@ -120,6 +120,10 @@ cfg = Config(
     use_command_whitelist=False,
     send_message_on_command_whitelist_deny=True,
     send_message_on_disabled_command_use=True,
+    soundbank_path='./sounds',
+    soundbank_default_price=50,
+    soundbank_gain=0,
+    soundbank_cooldown=15,
     command_whitelist=[
         'help', 'commands', 'reloadcmdwhitelist', 'reloadmod', 'reloadperms', 'disablemod', 'enablemod', 'disablecmdglobal', 'disablecmd',
         'enablecmdglobal', 'enablecmd', 'addcmd', 'delcmd', 'updatecmd', 'cmd'
