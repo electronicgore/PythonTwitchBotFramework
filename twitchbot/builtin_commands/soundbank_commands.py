@@ -14,7 +14,7 @@ from twitchbot import (
     add_sound,
     get_sound,
     delete_sound,
-    clear_sb,
+    clean_sb,
     populate_sb,
     purge_sb
 )
@@ -161,8 +161,8 @@ async def cmd_get_sound(msg: Message, *args):
     if snd.gain:
         gain = snd.gain
     else:
-        gain = cfg.soundbank_gain
-    sound = pd_audio.from_file(snd.filepath) + gain
+        gain = 0
+    sound = pd_audio.from_file(snd.filepath) + cfg.soundbank_gain + gain
     pd_play(sound)
 
 
@@ -179,6 +179,18 @@ async def cmd_del_sound(msg: Message, *args):
     await msg.reply(f'successfully deleted sound "{snd.sndid}"')
 
 
+@Command('purgesb', permission='sound', help='deletes all sounds from the soundbank')
+async def cmd_purge_sb(msg: Message):
+    purge_sb(channel=msg.channel_name)
+    await msg.reply(f'soundbank purged')
+
+
+@Command('cleansb', permission='sound', syntax='[q]uiet', help='clears all sounds with missing files from the soundbank')
+async def cmd_clean_sb(msg: Message):
+    num = clean_sb(channel=msg.channel_name, verbose=not quiet)
+    await msg.reply(f'{num} sounds with missing files were deleted')
+    
+
 @Command('updatesb', permission='sound', syntax='[r]ecursive [s]trip [f]orce [q]uiet',
     help='auto-updates the soundbank from the filesystem')
 async def cmd_upd_sb(msg: Message, *args):
@@ -188,18 +200,9 @@ async def cmd_upd_sb(msg: Message, *args):
     replace = True if ('f' in optionals) else False 
     quiet = True if ('q' in optionals) else False 
     
-    # First go through all existing sounds in db to check if files still exist
-    clear_sb(channel=msg.channel_name, verbose=not quiet)
-    # Now scan folder for any new files and add them, replacing old ones if specified
     populate_sb(channel=msg.channel_name, path=SB_PATH, recursive=rec, replace=replace, 
             strip_prefix=strip, verbose=not quiet)
     await msg.reply(f'soundbank updated')
-
-
-@Command('purgesb', permission='sound', help='deletes all sounds from the soundbank')
-async def cmd_purge_sb(msg: Message):
-    purge_sb(channel=msg.channel_name)
-    await msg.reply(f'soundbank purged')
 
 
 @Command('gensblist', permission='sound', help='output list of sounds in soundbank (with prices) to file')

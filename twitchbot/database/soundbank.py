@@ -4,7 +4,7 @@ from typing import Optional
 from .models import Sound
 from .session import session
 
-__all__ = ('add_sound', 'get_sound', 'delete_sound', 'purge_sb', 'clear_sb', 'populate_sb')
+__all__ = ('add_sound', 'get_sound', 'delete_sound', 'purge_sb', 'clean_sb', 'populate_sb')
 
 
 def add_sound(snd: Sound) -> bool:
@@ -38,7 +38,7 @@ def purge_sb(channel: str) -> None:
     session.commit()
 
 
-def clear_sb(channel: str, verbose: bool = True) -> None:
+def clean_sb(channel: str, verbose: bool = True) -> int:
     """remove unused files and add new files to soundbank"""
     num=0
     for snd in session.query(Sound).filter(Sound.channel == channel).all():
@@ -49,8 +49,7 @@ def clear_sb(channel: str, verbose: bool = True) -> None:
                 print(f'sound "{snd.sndid}" has been deleted because the associated file was not found ({snd.filepath})')
             
     session.commit()
-    if verbose:
-        print(f'{num} sounds with missing files were deleted')
+    return num
 
 
 def _filename_strip(filename: str, strip_prefix: bool = False) -> str:
