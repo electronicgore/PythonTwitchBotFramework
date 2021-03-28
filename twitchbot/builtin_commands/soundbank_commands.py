@@ -211,7 +211,6 @@ async def cmd_upd_sb(msg: Message, *args):
     
     num_a,num_r = populate_sb(channel=msg.channel_name, path=SB_PATH, recursive=rec, 
             replace=replace, strip_prefix=strip, verbose=not quiet)
-    await msg.reply(f'soundbank updated')
     if replace:
         await msg.reply(f'soundbank updated; {num_a} sounds added, {num_r} sounds replaced')
     else:
