@@ -7,6 +7,7 @@ from twitchbot import (
     Message,
     Sound,
     cfg,
+    session,
     InvalidArgumentsError,
     get_currency_name,
     get_balance_from_msg,
@@ -223,7 +224,7 @@ async def cmd_gen_sb_list(msg: Message):
     with open(f"{SB_PATH}/sb_list_{channel}.txt", 'w') as f:
         f.write(f'# Soundbank [sub]commands list for channel {channel}\n\n')
         f.write('# AUTOMATICALLY GENERATED FILE\n')
-        currency = get_currency_name(snd.channel).name
+        currency = get_currency_name(channel).name
         for snd in session.query(Sound).filter(Sound.channel == channel).all():
             if snd.price:
                 price=snd.price
