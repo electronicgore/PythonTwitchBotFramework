@@ -1,8 +1,10 @@
 # PythonTwitchBotFramework with Soundboard
-What follows is the README of the upstream PythonTwitchBotFramework. The README for the soundboard version is [here](https://github.com/electronicgore/PythonTwitchBotFramework/README_SOUNDBOARD.md).
+What follows is the README of the upstream PythonTwitchBotFramework. 
+The README for the soundboard version is [here](https://github.com/electronicgore/PythonTwitchBotFramework/blob/master/README_SOUNDBOARD.md).
 
+-----------------------------
 
-# if you have any questions concerning the bot, you can contact me in my discord server: https://discord.gg/PXrKVHp OR [r/pythontwitchbot](https://www.reddit.com/r/pythontwitchbot/) on reddit
+## if you have any questions concerning the bot, you can contact me in my discord server: https://discord.gg/PXrKVHp OR [r/pythontwitchbot](https://www.reddit.com/r/pythontwitchbot/) on reddit
 
 if you would like to send a few dollars my way you can do so
 here: [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9ZVUE7CR24738)
