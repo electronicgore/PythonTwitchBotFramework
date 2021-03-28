@@ -80,7 +80,7 @@ async def cmd_add_sound(msg: Message, *args):
     await msg.reply(resp)
 
 
-@Command('updsound', permission='sound', syntax='<sndid> price=(price) pricemult=(pricemult) gain=(gain)', 
+@Command('updsound', permission='sound', syntax='<sndid> name=(new_sndid) price=(price) pricemult=(pricemult) gain=(gain)', 
     help='updates sound details in the soundboard')
 async def cmd_upd_sound(msg: Message, *args):
     # this largely follows the same steps as addsound
@@ -89,6 +89,15 @@ async def cmd_upd_sound(msg: Message, *args):
         raise InvalidArgumentsError(reason='no sound found with this name', cmd=cmd_upd_sound)
         
     optionals = ' '.join(args[2:])
+    
+    if 'name' in optionals:
+        m = re.search(r'name=(\w+)', msg.content)
+        if m:
+            snd.sndid = m
+        else:
+            raise InvalidArgumentsError(
+                reason='invalid new name for name=',
+                        cmd=cmd_upd_sound)
     
     if 'price=' in optionals and 'pricemult=' in optionals:
         raise InvalidArgumentsError(reason='specify price or pricemult, not both!',
