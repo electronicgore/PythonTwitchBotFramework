@@ -193,11 +193,13 @@ async def cmd_upd_sb(msg: Message, *args):
     # Now scan folder for any new files and add them, replacing old ones if specified
     populate_sb(channel=msg.channel_name, path=SB_PATH, recursive=rec, replace=replace, 
             strip_prefix=strip, verbose=not quiet)
+    await msg.reply(f'soundbank updated')
 
 
 @Command('purgesb', permission='sound', help='deletes all sounds from the soundbank')
 async def cmd_purge_sb(msg: Message):
     purge_sb(channel=msg.channel_name)
+    await msg.reply(f'soundbank purged')
 
 
 @Command('gensblist', permission='sound', help='output list of sounds in soundbank (with prices) to file')
@@ -215,3 +217,4 @@ async def cmd_gen_sb_list(msg: Message):
             else:
                 price=SB_DEFPRICE
             f.write(f'{PREFIX}sb {snd.sndid}\t\t{price} {currency}\n')
+    await msg.reply(f'sound list generated')
