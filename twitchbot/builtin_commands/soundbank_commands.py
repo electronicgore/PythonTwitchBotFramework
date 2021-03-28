@@ -192,7 +192,7 @@ async def cmd_clean_sb(msg: Message):
     
 
 @Command('updatesb', permission='sound', syntax='[r]ecursive [s]trip [f]orce [q]uiet',
-    help='auto-updates the soundbank from the filesystem')
+    help='auto-imports sounds from the filesystem')
 async def cmd_upd_sb(msg: Message, *args):
     optionals = ' '.join(args)
     rec = True if ('r' in optionals) else False 
@@ -200,9 +200,13 @@ async def cmd_upd_sb(msg: Message, *args):
     replace = True if ('f' in optionals) else False 
     quiet = True if ('q' in optionals) else False 
     
-    populate_sb(channel=msg.channel_name, path=SB_PATH, recursive=rec, replace=replace, 
-            strip_prefix=strip, verbose=not quiet)
+    num_a,num_r = populate_sb(channel=msg.channel_name, path=SB_PATH, recursive=rec, 
+            replace=replace, strip_prefix=strip, verbose=not quiet)
     await msg.reply(f'soundbank updated')
+    if replace:
+        await msg.reply(f'soundbank updated; {num_a} sounds added, {num_r} sounds replaced')
+    else:
+        await msg.reply(f'soundbank updated; {num_a} sounds added')
 
 
 @Command('gensblist', permission='sound', help='output list of sounds in soundbank (with prices) to file')

@@ -79,7 +79,7 @@ def _filename_strip(filename: str, strip_prefix: bool = False) -> str:
 
 
 def populate_sb(channel: str, path: str = '.', recursive: bool = False, replace: bool = False, 
-            strip_prefix: bool = False, verbose: bool = True) -> bool:
+            strip_prefix: bool = False, verbose: bool = True):
     """auto-fill the soundbank (for given channel) from files in the specified folder"""
     if not os.path.exists(path):
         return False
@@ -97,6 +97,8 @@ def populate_sb(channel: str, path: str = '.', recursive: bool = False, replace:
             scanfiles.append([path, file])
     
     # Attempt to import files into database
+    num_a=0
+    num_r=0
     for froot,fname in scanfiles:
         # Generate full file path
         fpath = os.path.join(froot, fname)
@@ -114,11 +116,13 @@ def populate_sb(channel: str, path: str = '.', recursive: bool = False, replace:
             # no conflicts, add sound
             session.add(snd)
             resp = f'successfully added sound "{sndid}" to soundboard from {fpath}'
+            num_a+=1
         elif replace:
             # sndid exists and is overwritten
             session.query(Sound).filter(Sound.channel == channel, Sound.sndid == sndid).delete()
             session.add(snd)
             resp = f'replaced sound "{sndid}" from {fpath}'
+            num_r+=1
         elif sndex.filepath==snd.filepath:
             # sndid exists and is same file
             resp = f'sound "{sndid}" already exists from {fpath}'
@@ -132,4 +136,4 @@ def populate_sb(channel: str, path: str = '.', recursive: bool = False, replace:
     session.commit()
     if verbose:
         print('changes to db successfully committed')
-    return True
+    return num_a,num_r
