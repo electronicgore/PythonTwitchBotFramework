@@ -153,7 +153,8 @@ async def cmd_get_sound(msg: Message, *args):
     subtract_balance(msg.channel_name, msg.author, price)
     
     # report success
-    await msg.reply(f'{msg.author} played "{snd.sndid}" for {price} {currency}')
+    if cfg.soundbank_verbose:
+        await msg.reply(f'{msg.author} played "{snd.sndid}" for {price} {currency}')
     
     # play the sound with PyDub; supports all formats supported by ffmpeg.
     # Tested with mp3, wav, ogg.

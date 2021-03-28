@@ -122,6 +122,7 @@ cfg = Config(
     send_message_on_disabled_command_use=True,
     soundbank_path='./sounds',
     soundbank_default_price=50,
+    soundbank_verbose=True,
     soundbank_gain=0,
     soundbank_cooldown=15,
     command_whitelist=[
