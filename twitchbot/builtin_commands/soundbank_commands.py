@@ -35,7 +35,7 @@ async def cmd_add_sound(msg: Message, *args):
         raise InvalidArgumentsError(reason='file you are trying to add does not exist', cmd=cmd_add_sound)
     if not args:
         raise InvalidArgumentsError(reason='missing required arguments', cmd=cmd_add_sound)
-    sndid=args[0]
+    sndid=args[0].lower()
 
     optionals = ' '.join(args[2:])
     optargs = {}
