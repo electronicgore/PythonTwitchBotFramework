@@ -196,8 +196,13 @@ async def cmd_purge_sb(msg: Message):
 
 
 @Command('cleansb', permission='sound', syntax='[q]uiet', help='clears all sounds with missing files from the soundbank')
-async def cmd_clean_sb(msg: Message):
-    num = clean_sb(channel=msg.channel_name, verbose=not quiet)
+async def cmd_clean_sb(msg: Message, *args):
+    # this 'if' is bold, but it should work?
+    if 'q' in args:
+        verbose=False
+    else:
+        verbose=True
+    num = clean_sb(channel=msg.channel_name, verbose=verbose)
     await msg.reply(f'{num} sounds with missing files were deleted')
     
 

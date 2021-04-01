@@ -107,7 +107,7 @@ def populate_sb(channel: str, path: str = '.', recursive: bool = False, replace:
         if not pd_mediainfo(fpath):
             continue
         
-        sndid = _filename_strip(fname, strip_prefix)
+        sndid = _filename_strip(fname, strip_prefix).lower()
         snd = Sound.create(channel=channel, sndid=sndid, filepath=fpath)
         
         # Try to add the file
