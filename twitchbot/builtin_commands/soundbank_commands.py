@@ -72,12 +72,7 @@ async def cmd_add_sound(msg: Message, *args):
                     cmd=cmd_add_sound)
     
     snd = Sound.create(channel=msg.channel_name, sndid=sndid, filepath=filepath, **optargs)
-    
-    if add_sound(snd):
-        resp = f'successfully added sound "{sndid}" to soundboard'
-    else:
-        resp = 'failed to add sound, already exists'
-
+    resp = add_sound(snd)
     await msg.reply(resp)
 
 

@@ -7,16 +7,21 @@ from .session import session
 __all__ = ('add_sound', 'get_sound', 'delete_sound', 'purge_sb', 'clean_sb', 'populate_sb')
 
 
-def add_sound(snd: Sound) -> bool:
-    """add a sound object to the soundbank, return a bool indicating if it was successful"""
+def add_sound(snd: Sound) -> str:
+    """add a sound object to the soundbank, return a string describing the outcome"""
     assert isinstance(snd, Sound), 'sound must be of type Sound'
 
     if sound_exist(snd.channel, snd.sndid, snd.filepath):
-        return False
-
-    session.add(snd)
-    session.commit()
-    return True
+        resp = f'failed to add sound: sound "{sndid}" already exists in soundbank'
+        return resp
+    
+    if pd_mediainfo(snd.filepath):
+        session.add(snd)
+        session.commit()
+        resp = f'successfully added sound "{sndid}" to soundboard'
+    else:
+        resp = f'failed to add sound: file not found or not recognized'
+    return resp
 
 
 def get_sound(channel: str, sndid: str) -> Optional[Sound]:
