@@ -1,5 +1,7 @@
 # PythonTwitchBotFramework with Soundboard
 
+**NOTE: this readme is for the soundboard only! The upstream readme for the whole bot is [here](https://github.com/electronicgore/PythonTwitchBotFramework/blob/master/README_upstream.md)**
+
 This is a fork of [PythonTwitchBotFramework](https://github.com/sharkbound/PythonTwitchBotFramework) that adds the soundboard capabilities to the bot. This readme describes the functions specific to this fork; see the original readme and the [wiki](https://github.com/sharkbound/PythonTwitchBotFramework/wiki) in the upstream repo for info on how to install, set up, and use the bot.
 
 The soundboard currently integrates with the bot's own economy, but does not react to bits/subscriptions/channel points. 
